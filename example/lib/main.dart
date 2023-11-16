@@ -1,3 +1,4 @@
+import 'package:example/gauge_chart_page.dart';
 import 'package:example/sunburst_chart_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(title: 'CB Charts Flutter Demo'),
       initialRoute: "/",
       routes: {
-        '/sunburst_chart_page': (context) => const SunburstChartPage()
+        '/sunburst_chart_page': (context) => const SunburstChartPage(),
+        '/gauge_chart_page': (context) => const GaugeChartPage()
       },
     );
   }
@@ -49,6 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
             title: const Text('Sunburst chart'),
             onTap: () {
               Navigator.pushNamed(context, '/sunburst_chart_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Gauge chart'),
+            onTap: () {
+              Navigator.pushNamed(context, '/gauge_chart_page');
             },
           ),
         ],
