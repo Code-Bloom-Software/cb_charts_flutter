@@ -1,3 +1,4 @@
+import 'package:example/bubble_chart_page.dart';
 import 'package:example/gauge_chart_page.dart';
 import 'package:example/legends_chart_page.dart';
 import 'package:example/legends_chart_with_goal_page.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         '/ring_chart_with_goal_page': (context) => const RingChartWithGoalPage(),
         '/ring_chart_over_goal_page': (context) => const RingChartOverGoalPage(),
         '/legends_chart_page': (context) => const LegendsChartPage(),
-        '/legends_chart_with_goal_page': (context) => const LegendsPageWithGoalPage()
+        '/legends_chart_with_goal_page': (context) => const LegendsPageWithGoalPage(),
+        '/bubble_chart_page': (context) => const BubbleChartPage()
       },
     );
   }
@@ -97,6 +99,12 @@ class _MyHomePageState extends State<MyHomePage> {
             title: const Text('Legends chart (with goal)'),
             onTap: () {
               Navigator.pushNamed(context, '/legends_chart_with_goal_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Bubble chart'),
+            onTap: () {
+              Navigator.pushNamed(context, '/bubble_chart_page');
             },
           ),
         ],

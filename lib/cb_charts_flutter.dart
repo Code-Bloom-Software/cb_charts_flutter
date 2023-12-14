@@ -18,3 +18,8 @@ export 'src/cb_ring_chart/cb_ring_chart_data.dart';
 // Legends Chart
 export 'src/cb_legends_chart/cb_legends_chart.dart' show CBLegendsChart;
 export 'src/cb_legends_chart/cb_legends_data.dart';
+
+// Bubble chart
+export 'src/cb_bubble_chart/cb_bubble_controller.dart' show CBBubbleController;
+export 'src/cb_bubble_chart/cb_bubble_chart.dart' show CBBubbleChart;
+export 'src/cb_bubble_chart/cb_bubble_data.dart';
