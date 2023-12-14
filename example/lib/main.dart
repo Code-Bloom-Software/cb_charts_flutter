@@ -1,4 +1,6 @@
 import 'package:example/gauge_chart_page.dart';
+import 'package:example/legends_chart_page.dart';
+import 'package:example/legends_chart_with_goal_page.dart';
 import 'package:example/ring_chart_over_goal_page.dart';
 import 'package:example/ring_chart_page.dart';
 import 'package:example/ring_chart_with_goal_page.dart';
@@ -28,7 +30,9 @@ class MyApp extends StatelessWidget {
         '/gauge_chart_page': (context) => const GaugeChartPage(),
         '/ring_chart_page': (context) => const RingChartPage(),
         '/ring_chart_with_goal_page': (context) => const RingChartWithGoalPage(),
-        '/ring_chart_over_goal_page': (context) => const RingChartOverGoalPage()
+        '/ring_chart_over_goal_page': (context) => const RingChartOverGoalPage(),
+        '/legends_chart_page': (context) => const LegendsChartPage(),
+        '/legends_chart_with_goal_page': (context) => const LegendsPageWithGoalPage()
       },
     );
   }
@@ -81,6 +85,18 @@ class _MyHomePageState extends State<MyHomePage> {
             title: const Text('Ring chart (over goal)'),
             onTap: () {
               Navigator.pushNamed(context, '/ring_chart_over_goal_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Legends chart'),
+            onTap: () {
+              Navigator.pushNamed(context, '/legends_chart_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Legends chart (with goal)'),
+            onTap: () {
+              Navigator.pushNamed(context, '/legends_chart_with_goal_page');
             },
           ),
         ],

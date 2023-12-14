@@ -14,3 +14,7 @@ export 'src/cb_gauge_chart/cb_gauge_data.dart';
 export 'src/cb_ring_chart/cb_ring_chart_controller.dart';
 export 'src/cb_ring_chart/cb_ring_chart.dart';
 export 'src/cb_ring_chart/cb_ring_chart_data.dart';
+
+// Legends Chart
+export 'src/cb_legends_chart/cb_legends_chart.dart' show CBLegendsChart;
+export 'src/cb_legends_chart/cb_legends_data.dart';
