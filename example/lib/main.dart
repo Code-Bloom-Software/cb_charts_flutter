@@ -1,4 +1,7 @@
 import 'package:example/gauge_chart_page.dart';
+import 'package:example/ring_chart_over_goal_page.dart';
+import 'package:example/ring_chart_page.dart';
+import 'package:example/ring_chart_with_goal_page.dart';
 import 'package:example/sunburst_chart_page.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +25,10 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         '/sunburst_chart_page': (context) => const SunburstChartPage(),
-        '/gauge_chart_page': (context) => const GaugeChartPage()
+        '/gauge_chart_page': (context) => const GaugeChartPage(),
+        '/ring_chart_page': (context) => const RingChartPage(),
+        '/ring_chart_with_goal_page': (context) => const RingChartWithGoalPage(),
+        '/ring_chart_over_goal_page': (context) => const RingChartOverGoalPage()
       },
     );
   }
@@ -57,6 +63,24 @@ class _MyHomePageState extends State<MyHomePage> {
             title: const Text('Gauge chart'),
             onTap: () {
               Navigator.pushNamed(context, '/gauge_chart_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Ring chart'),
+            onTap: () {
+              Navigator.pushNamed(context, '/ring_chart_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Ring chart (with goal)'),
+            onTap: () {
+              Navigator.pushNamed(context, '/ring_chart_with_goal_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Ring chart (over goal)'),
+            onTap: () {
+              Navigator.pushNamed(context, '/ring_chart_over_goal_page');
             },
           ),
         ],
