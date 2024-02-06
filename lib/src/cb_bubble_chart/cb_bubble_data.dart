@@ -34,12 +34,16 @@ class CBBubbleItem {
   /// The item color
   final Color color;
 
+  /// The lane color
+  final Color backgroundColor;
+
   /// The list of values of this item
   final List<double> values;
 
   CBBubbleItem({
     required this.label,
     required this.color,
+    required this.backgroundColor,
     required this.values
   });
 }

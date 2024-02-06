@@ -209,7 +209,7 @@ class CBBubbleChartRow extends StatelessWidget {
     final selected = this.selected;
     final diameter = (percentage * data.maxDiameter).clamp(data.minDiameter,
         selected != null ? data.maxDiameter - 10 : data.maxDiameter);
-    final rowColor = Color.alphaBlend(item.color.withOpacity(0.2), Colors.white);
+    final rowColor = item.backgroundColor;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24),
