@@ -15,10 +15,13 @@ class CBSunburstChart extends StatefulWidget {
   /// An optional builder to implement a widget that is shown in the chart center
   final Widget Function(CBSunburstSegment? segment)? centerInfoBuilder;
 
+  final Function(CBSunburstSegment? segment)? onTap;
+
   const CBSunburstChart({super.key,
     this.controller,
     required this.data,
-    this.centerInfoBuilder
+    this.centerInfoBuilder,
+    this.onTap
   });
 
   @override
@@ -96,6 +99,7 @@ class _CBSunburstChartState extends State<CBSunburstChart> {
                     parent = parent.parent;
                   }
                 });
+                widget.onTap?.call(_selected);
               },
               child: TweenAnimationBuilder(
                 duration: const Duration(milliseconds: 200),
@@ -133,5 +137,6 @@ class _CBSunburstChartState extends State<CBSunburstChart> {
       _selected = null;
       _selectedParents.clear();
     });
+    widget.onTap?.call(_selected);
   }
 }
