@@ -55,18 +55,7 @@ class _CBRingChartState extends State<CBRingChart> with SingleTickerProviderStat
         });
       }
     });
-    widget.controller?.addListener(() {
-      switch (widget.controller?.op) {
-        case CBRingChartControllerOp.forward:
-          _segmentAnimationController.forward();
-        case CBRingChartControllerOp.dismiss:
-          setState(() {
-            _selected = null;
-            _selectedLabel = null;
-          });
-        default:
-      }
-    });
+    widget.controller?.addListener(_handleListener);
     super.initState();
   }
 
@@ -168,8 +157,22 @@ class _CBRingChartState extends State<CBRingChart> with SingleTickerProviderStat
 
   @override
   void dispose() {
+    widget.controller?.removeListener(_handleListener);
     _segmentAnimationController.dispose();
     super.dispose();
+  }
+
+  void _handleListener() {
+    switch (widget.controller?.op) {
+      case CBRingChartControllerOp.forward:
+        _segmentAnimationController.forward();
+      case CBRingChartControllerOp.dismiss:
+        setState(() {
+          _selected = null;
+          _selectedLabel = null;
+        });
+      default:
+    }
   }
 
   void _handleSegmentTap(double fromPercentage, double toPercentage, CBRingChartSegment segment) {
