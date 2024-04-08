@@ -23,3 +23,9 @@ export 'src/cb_legends_chart/cb_legends_data.dart';
 export 'src/cb_bubble_chart/cb_bubble_controller.dart' show CBBubbleController;
 export 'src/cb_bubble_chart/cb_bubble_chart.dart' show CBBubbleChart;
 export 'src/cb_bubble_chart/cb_bubble_data.dart';
+
+// Sectioned line chart
+export 'src/cb_sectioned_line_chart/cb_sectioned_line_controller.dart' show CBSectionedLineController;
+export 'src/cb_sectioned_line_chart/cb_sectioned_line_chart.dart' show CBSectionedLineChart;
+export 'src/cb_sectioned_line_chart/cb_sectioned_line_chart.dart' show CBSectionedLineTimeLine;
+export 'src/cb_sectioned_line_chart/cb_sectioned_line_data.dart';
