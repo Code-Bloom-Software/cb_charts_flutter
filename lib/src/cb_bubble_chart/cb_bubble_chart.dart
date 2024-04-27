@@ -42,24 +42,7 @@ class _CBBubbleChartState extends State<CBBubbleChart> {
 
   @override
   void initState() {
-    final controller = widget.controller;
-
-    if (controller != null) {
-      controller.addListener(() {
-        switch (controller.op) {
-          case CBBubbleControllerOp.forward:
-            setState(() {
-              _initialized = true;
-            });
-            break;
-          case CBBubbleControllerOp.dismiss:
-            setState(() {
-              _selectedPair = null;
-            });
-            break;
-        }
-      });
-    }
+    widget.controller?.addListener(_handleListener);
     super.initState();
   }
 
@@ -129,6 +112,31 @@ class _CBBubbleChartState extends State<CBBubbleChart> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    widget.controller?.removeListener(_handleListener);
+    super.dispose();
+  }
+
+  void _handleListener() {
+    final controller = widget.controller;
+
+    if (controller != null) {
+      switch (controller.op) {
+        case CBBubbleControllerOp.forward:
+          setState(() {
+            _initialized = true;
+          });
+          break;
+        case CBBubbleControllerOp.dismiss:
+          setState(() {
+            _selectedPair = null;
+          });
+          break;
+      }
+    }
   }
 
   void _handleTap(int itemIndex, int circleIndex) {
