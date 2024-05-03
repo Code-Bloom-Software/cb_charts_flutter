@@ -56,7 +56,7 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
           .toList();
       final selectorWidth = _resolveSelectorWidth(data, selected, selectedIndex,
           lastSelected, lastSelectedIndex);
-      final expandedWidgetWidth = (_selected?.expandedWidget?.preferredSize.width ?? 0) + 2 * _defaultPadding;
+      final expandedWidgetWidth = ((_selected ?? _lastSelected)?.expandedWidget?.preferredSize.width ?? 0) + 2 * _defaultPadding;
       final selectorWidthExtraSpace = selectorWidth >= expandedWidgetWidth ? 0 : expandedWidgetWidth - selectorWidth;
       final divider = widget.data.divider;
       final dividerAlternate = widget.data.dividerAlternate;
