@@ -61,6 +61,10 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
       final divider = widget.data.divider;
       final dividerAlternate = widget.data.dividerAlternate;
       final dividerHeight = constraints.maxHeight/widget.data.numDividers;
+      final selectorLeftPosition = ((selected ?? lastSelected)
+          ?.values
+          .map((e) => e.dx)
+          .reduce(min) ?? 0) - selectorWidthExtraSpace/2;
 
       return GestureDetector(
         onTapDown: (details) {
@@ -90,10 +94,7 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
             ),
             Positioned(
               bottom: 0,
-              left: ((selected ?? lastSelected)
-                  ?.values
-                  .map((e) => e.dx)
-                  .reduce(min) ?? 0) - selectorWidthExtraSpace/2,
+              left: selectorLeftPosition.clamp(0, constraints.maxWidth - selectorWidth - selectorWidthExtraSpace),
               child: AnimatedOpacity(
                 opacity: selected != null && selectedIndex != null ? 1 : 0,
                 duration: const Duration(milliseconds: 200),
