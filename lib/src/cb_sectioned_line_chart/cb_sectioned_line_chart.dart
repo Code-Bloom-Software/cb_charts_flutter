@@ -109,10 +109,7 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
                   ),
                   width: selectorWidth + selectorWidthExtraSpace,
                   height: selected != null || lastSelected != null
-                      ? (selected ?? lastSelected!)
-                      .values
-                      .map((e) => e.dy)
-                      .reduce(max) + 2 * _defaultPadding + ((selected ?? lastSelected)?.expandedWidget?.preferredSize.height ?? 0)
+                      ? widget.data.maxY + 2 * _defaultPadding + ((selected ?? lastSelected)?.expandedWidget?.preferredSize.height ?? 0)
                       : 0,
                   child: ((selected ?? lastSelected)?.expandedWidget ?? const SizedBox.shrink()),
                 ),

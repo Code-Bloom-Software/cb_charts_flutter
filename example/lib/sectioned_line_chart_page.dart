@@ -37,6 +37,7 @@ class _SectionedLineChartPageState extends State<SectionedLineChartPage> {
                           divider: const Divider(height: 0, thickness: 1, color: Colors.blue),
                           dividerAlternate: Divider(height: 0, thickness: 1, color: Colors.blue.withOpacity(0.5)),
                           xAxisDivider: 12,
+                          maxY: 150,
                           sections: [
                             CBSectionedLineSection(
                                 label: 'Home',

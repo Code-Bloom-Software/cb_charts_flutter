@@ -8,6 +8,9 @@ class CBSectionedLineData {
   /// the number of dividers in y-axis
   final int numDividers;
 
+  /// Max y-axis
+  final double maxY;
+
   /// Divider widget
   final Widget? divider;
 
@@ -22,6 +25,7 @@ class CBSectionedLineData {
   CBSectionedLineData({
     this.lineWidth = 2.0,
     this.numDividers = 5,
+    required this.maxY,
     this.divider,
     this.dividerAlternate,
     required this.xAxisDivider,
