@@ -2,6 +2,9 @@ import 'package:cb_charts_flutter/src/cb_bubble_chart/cb_bubble_controller.dart'
 import 'package:cb_charts_flutter/src/cb_bubble_chart/cb_bubble_data.dart';
 import 'package:flutter/material.dart';
 
+const _horizontalPadding = 24.0;
+const _verticalPadding = 8.0;
+
 /// It draws a bubble chart. See a demo inside the example app.
 class CBBubbleChart extends StatefulWidget {
 
@@ -23,13 +26,17 @@ class CBBubbleChart extends StatefulWidget {
   /// A builder for each row label
   final Widget Function(String label) onLabel;
 
+  /// An optional builder to show a widget when the user taps the bubble
+  final CBBubbleTapWidget Function(int laneIndex, int circleIndex, double value)? onTap;
+
   const CBBubbleChart({super.key,
     this.controller,
     this.scrollController,
     required this.data,
     this.timeLineLeading,
     required this.onIndex,
-    required this.onLabel
+    required this.onLabel,
+    this.onTap
   });
 
   @override
@@ -38,6 +45,7 @@ class CBBubbleChart extends StatefulWidget {
 
 class _CBBubbleChartState extends State<CBBubbleChart> {
   SelectedPair? _selectedPair;
+  CBBubbleTapWidget? _selectedWidget;
   bool _initialized = false;
 
   @override
@@ -49,66 +57,88 @@ class _CBBubbleChartState extends State<CBBubbleChart> {
   @override
   Widget build(BuildContext context) {
     final items = widget.data.items;
+    final selectedPair = _selectedPair;
+    final selectedWidget = _selectedWidget;
 
     return GestureDetector(
       onTap: () {
         setState(() {
           _selectedPair = null;
+          _selectedWidget = null;
         });
       },
       child: SingleChildScrollView(
         controller: widget.scrollController,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: items
-              .asMap()
-              .entries
-              .map((e) => Padding(padding: const EdgeInsets.only(bottom: 8),
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 200),
-                opacity: (_selectedPair?.itemIndex ?? e.key) == e.key ? 1.0 : 0.2,
-                child: CBBubbleChartRow(onLabel: widget.onLabel,
-                    data: widget.data,
-                    item: e.value,
-                    selected: _selectedPair?.itemIndex == e.key ? _selectedPair : null,
-                    percentage: _selectedPair != null
-                        ? _calculatePercentage(
+        child: Stack(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: items
+                  .asMap()
+                  .entries
+                  .map((e) => Padding(padding: const EdgeInsets.only(bottom: _verticalPadding),
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 200),
+                    opacity: (_selectedPair?.itemIndex ?? e.key) == e.key ? 1.0 : 0.2,
+                    child: CBBubbleChartRow(onLabel: widget.onLabel,
                         data: widget.data,
-                        itemIndex: _selectedPair!.itemIndex,
-                        circleIndex: _selectedPair!.circleIndex)
-                        : 0,
-                    circles: e.value.values.asMap()
-                        .entries
-                        .map((e2) => GestureDetector(
-                      onTap: () => _handleTap(e.key, e2.key),
-                      child: Container(
-                        color: Colors.transparent,
-                        alignment: Alignment.center,
-                        width: widget.data.maxDiameter,
-                        height: widget.data.maxDiameter,
-                        child: CBBubbleChartCircle(
-                            initialized: _initialized,
+                        item: e.value,
+                        selected: _selectedPair?.itemIndex == e.key ? _selectedPair : null,
+                        percentage: _selectedPair != null
+                            ? _calculatePercentage(
                             data: widget.data,
-                            selected: _selectedPair?.itemIndex == e.key && _selectedPair?.circleIndex == e2.key,
-                            item: e.value,
-                            percentage: _calculatePercentage(
+                            itemIndex: _selectedPair!.itemIndex,
+                            circleIndex: _selectedPair!.circleIndex)
+                            : 0,
+                        circles: e.value.values.asMap()
+                            .entries
+                            .map((e2) => GestureDetector(
+                          onTap: () => _handleTap(e.key, e2.key),
+                          child: Container(
+                            color: Colors.transparent,
+                            alignment: Alignment.center,
+                            width: widget.data.maxDiameter,
+                            height: widget.data.maxDiameter,
+                            child: CBBubbleChartCircle(
+                                initialized: _initialized,
                                 data: widget.data,
-                                itemIndex: e.key,
-                                circleIndex: e2.key)),
-                      ),
-                    )).toList()),
-              )))
-              .toList()..add(Padding(
-            padding: EdgeInsets.zero,
-            child: CBBubbleChartTimeLine(
-              leading: widget.timeLineLeading,
-              onIndex: widget.onIndex,
-              data: widget.data
+                                selected: _selectedPair?.itemIndex == e.key && _selectedPair?.circleIndex == e2.key,
+                                item: e.value,
+                                percentage: _calculatePercentage(
+                                    data: widget.data,
+                                    itemIndex: e.key,
+                                    circleIndex: e2.key)),
+                          ),
+                        )).toList()),
+                  )))
+                  .toList()..add(Padding(
+                padding: EdgeInsets.zero,
+                child: CBBubbleChartTimeLine(
+                  leading: widget.timeLineLeading,
+                  onIndex: widget.onIndex,
+                  data: widget.data
+                ),
+              )),
             ),
-          )),
+            if (selectedWidget != null && selectedPair != null) Positioned(
+                left: _horizontalPadding +
+                    widget.data.labelWidth +
+                    selectedPair.circleIndex *
+                        widget.data.maxDiameter *
+                        (1 - widget.data.percentOverlap) +
+                    widget.data.maxDiameter / 2,
+                top: widget.data.maxDiameter * selectedPair.itemIndex +
+                    _verticalPadding * selectedPair.itemIndex +
+                    widget.data.maxDiameter / 2,
+                child: FractionalTranslation(
+                  translation: Offset(-0.5 + selectedWidget.anchor.dx, -0.5 + selectedWidget.anchor.dy),
+                  child: selectedWidget.child,
+                )
+              )
+          ],
         ),
       ),
     );
@@ -133,6 +163,7 @@ class _CBBubbleChartState extends State<CBBubbleChart> {
         case CBBubbleControllerOp.dismiss:
           setState(() {
             _selectedPair = null;
+            _selectedWidget = null;
           });
           break;
       }
@@ -142,6 +173,8 @@ class _CBBubbleChartState extends State<CBBubbleChart> {
   void _handleTap(int itemIndex, int circleIndex) {
     setState(() {
       _selectedPair = SelectedPair(itemIndex, circleIndex);
+      _selectedWidget = widget.onTap?.call(itemIndex, circleIndex,
+          widget.data.items[itemIndex].values[circleIndex]);
     });
   }
 
@@ -173,7 +206,7 @@ class CBBubbleChartTimeLine extends StatelessWidget {
 
     return Row(
       children: [
-        const SizedBox(width: 24),
+        const SizedBox(width: _horizontalPadding),
         leading != null ? SizedBox(width:data.labelWidth, child: leading!) : const SizedBox(width: 100),
         Stack(alignment: Alignment.center, children: [
           SizedBox(width: totalWidth, height: data.maxDiameter),
@@ -221,7 +254,7 @@ class CBBubbleChartRow extends StatelessWidget {
     final rowColor = item.backgroundColor;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
       decoration: BoxDecoration(
           color: rowColor,
           borderRadius: const BorderRadius.all(Radius.circular(16))

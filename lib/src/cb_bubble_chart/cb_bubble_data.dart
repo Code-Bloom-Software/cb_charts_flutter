@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/widgets.dart';
 
 class CBBubbleData {
 
@@ -45,5 +45,19 @@ class CBBubbleItem {
     required this.color,
     required this.backgroundColor,
     required this.values
+  });
+}
+
+class CBBubbleTapWidget {
+
+  /// The anchor to positioning the widget, e.g, Offset(0, 0) to center it
+  final Offset anchor;
+
+  /// The actual widget
+  final Widget child;
+
+  CBBubbleTapWidget({
+    required this.anchor,
+    required this.child
   });
 }
