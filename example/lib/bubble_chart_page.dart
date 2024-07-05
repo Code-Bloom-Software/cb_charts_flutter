@@ -63,6 +63,19 @@ class _BubbleChartPageState extends State<BubbleChartPage> {
               label,
               style: const TextStyle(fontSize: 14, color: Color(0xFF16223A)),
             ),
+            onTap: (laneIndex, circleIndex, value) => CBBubbleTapWidget(
+              anchor: const Offset(0, 0.5),
+              child: Container(
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle
+                ),
+                width: 30,
+                height: 30,
+                child: Text(value.toString()),
+              ),
+            ),
           ),
         ),
       ),
