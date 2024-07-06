@@ -17,12 +17,16 @@ class CBBubbleData {
   /// The items list
   final List<CBBubbleItem> items;
 
+  /// The max value for the bubble in x axis (if null the max will be the sum)
+  final double? xAxisMax;
+
   CBBubbleData({
     this.minDiameter = 3,
     this.maxDiameter = 56,
     this.percentOverlap = 0.2,
     this.labelWidth = 100,
-    required this.items
+    required this.items,
+    this.xAxisMax
   });
 }
 
