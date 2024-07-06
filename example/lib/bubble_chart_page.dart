@@ -44,13 +44,13 @@ class _BubbleChartPageState extends State<BubbleChartPage> {
                     label: 'Playing',
                     color: const Color(0xFF822E6C),
                     backgroundColor: Color.alphaBlend(const Color(0xFF822E6C).withOpacity(0.2), Colors.white),
-                    values: [0,2,8,10,7,1,4,9,0,10,5,2,8,3,7,1,4,9,0,10,5,6,2,8]
+                    values: [0,2,8,20,7,1,4,9,0,10,5,2,8,3,7,1,4,9,0,10,5,6,15,8]
                 ),
                 CBBubbleItem(
                     label: 'Sleeping',
                     color: const Color(0xFF009693),
                     backgroundColor: Color.alphaBlend(const Color(0xFF009693).withOpacity(0.2), Colors.white),
-                    values: [10,10,0,1,5,2,8,4,0,6,10,3,7,1,5,2,8,4,0,6,10,9,3,7]
+                    values: [30,10,0,1,5,2,8,4,0,6,10,3,7,1,5,2,8,4,0,6,10,9,3,7]
                 ),
               ]
             ),

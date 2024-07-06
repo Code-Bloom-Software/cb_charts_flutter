@@ -179,7 +179,7 @@ class _CBBubbleChartState extends State<CBBubbleChart> {
   }
 
   double _calculatePercentage({required CBBubbleData data, required int itemIndex, required int circleIndex}) {
-    final total = data.items.map((e) => e.values[circleIndex]).reduce((value, element) => value + element);
+    final total = data.xAxisMax ?? data.items.map((e) => e.values[circleIndex]).reduce((value, element) => value + element);
 
     if (total <= 0) return 0;
     return data.items[itemIndex].values[circleIndex]/total;
