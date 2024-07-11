@@ -6,6 +6,7 @@ import 'package:example/ring_chart_over_goal_page.dart';
 import 'package:example/ring_chart_page.dart';
 import 'package:example/ring_chart_with_goal_page.dart';
 import 'package:example/sectioned_line_chart_page.dart';
+import 'package:example/stacked_circle_chart_page.dart';
 import 'package:example/sunburst_chart_page.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
         '/legends_chart_page': (context) => const LegendsChartPage(),
         '/legends_chart_with_goal_page': (context) => const LegendsPageWithGoalPage(),
         '/bubble_chart_page': (context) => const BubbleChartPage(),
-        '/sectioned_line_chart_page': (context) => const SectionedLineChartPage()
+        '/sectioned_line_chart_page': (context) => const SectionedLineChartPage(),
+        '/stacked_circle_chart_page': (context) => const StackedCircleChartPage()
       },
     );
   }
@@ -113,6 +115,12 @@ class _MyHomePageState extends State<MyHomePage> {
             title: const Text('Sectioned line chart'),
             onTap: () {
               Navigator.pushNamed(context, '/sectioned_line_chart_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Stacked circle chart'),
+            onTap: () {
+              Navigator.pushNamed(context, '/stacked_circle_chart_page');
             },
           ),
         ],
