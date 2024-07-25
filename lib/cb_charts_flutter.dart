@@ -29,3 +29,8 @@ export 'src/cb_sectioned_line_chart/cb_sectioned_line_controller.dart' show CBSe
 export 'src/cb_sectioned_line_chart/cb_sectioned_line_chart.dart' show CBSectionedLineChart;
 export 'src/cb_sectioned_line_chart/cb_sectioned_line_chart.dart' show CBSectionedLineTimeLine;
 export 'src/cb_sectioned_line_chart/cb_sectioned_line_data.dart';
+
+// Stacked circle chart
+export 'src/cb_stacked_circle_chart/cb_stacked_circle_controller.dart' show CbStackedCircleController;
+export 'src/cb_stacked_circle_chart/cb_stacked_circle_chart.dart' show CbStackedCircleChart;
+export 'src/cb_stacked_circle_chart/cb_stacked_circle_data.dart';
