@@ -46,7 +46,7 @@ class _SectionedLineChartPageState extends State<SectionedLineChartPage> {
                                 selectionColor: Color.alphaBlend(const Color(0xFF009693).withOpacity(0.1), Colors.white),
                                 expandedWidget: _buildExpandableWidget('Home', 350, const Size(80, 50)),
                                 collapsedWidget: _buildCollapsedWidget(const Size.square(16)),
-                                values: const [Offset(0, 0), Offset(30, 80), Offset(60, 120), Offset(90, 150)]
+                                values: const [Offset(0, 0), Offset(30, 80), Offset(60, 120), Offset(90, 150), Offset(120, 120)]
                             ),
                             CBSectionedLineSection(
                                 label: 'Park',
@@ -55,16 +55,16 @@ class _SectionedLineChartPageState extends State<SectionedLineChartPage> {
                                 selectionColor: Color.alphaBlend(const Color(0xFF822E6C).withOpacity(0.1), Colors.white),
                                 expandedWidget: _buildExpandableWidget('Park', 100, const Size(80, 50)),
                                 collapsedWidget: _buildCollapsedWidget(const Size.square(16)),
-                                values: const [Offset(120, 0), Offset(150, 20), Offset(180, 80)]
+                                values: const [Offset(150, 0), Offset(180, 20), Offset(210, 80)]
                             ),
                             CBSectionedLineSection(
                                 label: 'Walking',
                                 lineColor: const Color(0xFFED6926),
                                 backgroundColor: Color.alphaBlend(const Color(0xFFED6926).withOpacity(0.3), Colors.white),
                                 selectionColor: Color.alphaBlend(const Color(0xFFED6926).withOpacity(0.1), Colors.white),
-                                expandedWidget: _buildExpandableWidget('Walking', 170, const Size(80, 50)),
+                                expandedWidget: _buildExpandableWidget('Walking at park', 170, const Size(160, 50)),
                                 collapsedWidget: _buildCollapsedWidget(const Size.square(16)),
-                                values: const [Offset(210, 0), Offset(240, 50), Offset(270, 120), Offset(300, 0)]
+                                values: const [Offset(240, 0), Offset(270, 50), Offset(300, 120), Offset(330, 0)]
                             )
                           ]
                       )

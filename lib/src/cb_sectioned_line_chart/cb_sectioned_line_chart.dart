@@ -6,7 +6,7 @@ import 'package:cb_charts_flutter/src/cb_sectioned_line_chart/cb_sectioned_line_
 import 'package:cb_charts_flutter/src/utils/math_utils.dart';
 import 'package:flutter/material.dart';
 
-const _defaultPadding = 16.0;
+const _defaultPadding = 8.0;
 
 class CBSectionedLineChart extends StatefulWidget {
 
@@ -42,6 +42,17 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
   }
 
   @override
+  void didUpdateWidget(covariant CBSectionedLineChart oldWidget) {
+    if (oldWidget.data != widget.data) {
+      _lastSelected = _selected;
+      _lastSelectedIndex = _selectedIndex;
+      _selected = null;
+      _selectedIndex = null;
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final selected = _selected;
     final selectedIndex = _selectedIndex;
@@ -57,7 +68,7 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
       final selectorWidth = _resolveSelectorWidth(data, selected, selectedIndex,
           lastSelected, lastSelectedIndex);
       final expandedWidgetWidth = ((_selected ?? _lastSelected)?.expandedWidget?.preferredSize.width ?? 0) + 2 * _defaultPadding;
-      final selectorWidthExtraSpace = selectorWidth >= expandedWidgetWidth ? 0 : expandedWidgetWidth - selectorWidth;
+      final selectorWidthExtraSpace = selectorWidth >= expandedWidgetWidth ? 0.0 : expandedWidgetWidth - selectorWidth;
       final divider = widget.data.divider;
       final dividerAlternate = widget.data.dividerAlternate;
       final dividerHeight = constraints.maxHeight/widget.data.numDividers;
@@ -98,22 +109,18 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
               child: AnimatedOpacity(
                 opacity: selected != null && selectedIndex != null ? 1 : 0,
                 duration: const Duration(milliseconds: 200),
-                child: Container(
-                  alignment: Alignment.topCenter,
-                  padding: const EdgeInsets.only(top: _defaultPadding),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8)
-                    ),
-                    color: selected?.selectionColor ?? lastSelected?.selectionColor,
-                  ),
-                  width: selectorWidth + selectorWidthExtraSpace,
-                  height: selected != null || lastSelected != null
-                      ? widget.data.maxY + 2 * _defaultPadding + ((selected ?? lastSelected)?.expandedWidget?.preferredSize.height ?? 0)
-                      : 0,
-                  child: ((selected ?? lastSelected)?.expandedWidget ?? const SizedBox.shrink()),
-                ),
+                child: CBSectionedLineSelection(
+                    maxWidth: constraints.maxWidth,
+                    maxY: widget.data.maxY,
+                    lineWidth: widget.data.lineWidth,
+                    selectorLeftPosition: selectorLeftPosition,
+                    selectorWidth: selectorWidth,
+                    selectorWidthExtraSpace: selectorWidthExtraSpace,
+                    lineColor: selected?.lineColor ?? lastSelected?.lineColor,
+                    backgroundColor: selected?.backgroundColor ?? lastSelected?.backgroundColor,
+                    selected: selected,
+                    lastSelected: lastSelected
+                )
               ),
             ),
             AnimatedOpacity(
@@ -136,12 +143,12 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
                   lineColors: widget.data.sections
                       .map((e) => e == selected
                           ? e.lineColor
-                          : e.lineColor.withOpacity(0.5))
+                          : e.lineColor.withOpacity(0.25))
                       .toList(),
                   areaColors: widget.data.sections
                       .map((e) => e == selected
                           ? e.backgroundColor
-                          : e.backgroundColor.withOpacity(0.5))
+                          : e.backgroundColor.withOpacity(0.25))
                       .toList()),
             ),
             ...widget.data.sections
@@ -238,7 +245,7 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
           .reduce(min);
     }
 
-    return maxOffset - minOffset;
+    return maxOffset - minOffset >= 0 ? maxOffset - minOffset : 0;
   }
 
   void _handleListener() {
@@ -282,3 +289,118 @@ class CBSectionedLineTimeLine extends StatelessWidget {
   }
 }
 
+class CBSectionedLineSelection extends StatelessWidget {
+  final double maxWidth;
+  final double maxY;
+  final double lineWidth;
+  final double selectorLeftPosition;
+  final double selectorWidth;
+  final double selectorWidthExtraSpace;
+  final Color? lineColor;
+  final Color? backgroundColor;
+  final CBSectionedLineSection? selected;
+  final CBSectionedLineSection? lastSelected;
+
+  const CBSectionedLineSelection({super.key,
+    required this.maxWidth,
+    required this.maxY,
+    required this.lineWidth,
+    required this.selectorLeftPosition,
+    required this.selectorWidth,
+    required this.selectorWidthExtraSpace,
+    required this.lineColor,
+    required this.backgroundColor,
+    required this.selected,
+    required this.lastSelected
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final color = selected?.selectionColor ?? lastSelected?.selectionColor;
+    final lineColor = this.lineColor;
+    final backgroundColor = this.backgroundColor;
+    const overSelectionHeight = 22.0;
+    final maxOffset = maxWidth - selectorWidth - selectorWidthExtraSpace;
+    final Offset fixPositionOffset;
+    if (selectorLeftPosition < 0) {
+      fixPositionOffset = Offset(selectorLeftPosition, 0);
+    } else if (selectorLeftPosition > maxOffset) {
+      fixPositionOffset = Offset(selectorLeftPosition - maxOffset, 0);
+    } else {
+      fixPositionOffset = Offset.zero;
+    }
+
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Transform.translate(
+          offset: fixPositionOffset,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: _defaultPadding),
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8)
+                    ),
+                    gradient: color != null ? LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [color, color.withOpacity(0.3)],
+                        stops: const [0.35, 1]
+                    ) : null
+                ),
+                width: selectorWidth,
+                height: selected != null || lastSelected != null
+                    ? maxY + 2 * _defaultPadding + ((selected ?? lastSelected)?.expandedWidget?.preferredSize.height ?? 0)
+                    : 0,
+              ),
+              Transform.translate(
+                offset: const Offset(0, overSelectionHeight),
+                child: ShaderMask(
+                  blendMode: BlendMode.dstATop,
+                  shaderCallback: (rect) => const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.white, Colors.transparent],
+                  ).createShader(rect),
+                  child: Container(
+                    decoration: lineColor != null ? BoxDecoration(
+                      color: backgroundColor,
+                      border: Border(
+                        left: BorderSide(
+                          color: lineColor,
+                          width: lineWidth,
+                        ),
+                        right: BorderSide(
+                            color: lineColor,
+                            width: lineWidth
+                        ),
+                      ),
+                    ) : null,
+                    height: overSelectionHeight,
+                    width: selectorWidth,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.only(top: _defaultPadding),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            color: color
+          ),
+          width: selectorWidth + selectorWidthExtraSpace,
+          height: selected != null || lastSelected != null
+              ? 2 * _defaultPadding + ((selected ?? lastSelected)?.expandedWidget?.preferredSize.height ?? 0)
+              : 0,
+          child: ((selected ?? lastSelected)?.expandedWidget ?? const SizedBox.shrink()),
+        ),
+      ],
+    );
+  }
+}
