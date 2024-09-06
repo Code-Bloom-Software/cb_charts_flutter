@@ -31,6 +31,31 @@ class CBSectionedLineData {
     required this.xAxisDivider,
     required this.sections
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is CBSectionedLineData &&
+        other.lineWidth == lineWidth &&
+        other.numDividers == numDividers &&
+        other.maxY == maxY &&
+        other.divider == divider &&
+        other.dividerAlternate == dividerAlternate &&
+        other.xAxisDivider == xAxisDivider &&
+        const ListEquality().equals(other.sections, sections);
+  }
+
+  @override
+  int get hashCode {
+    return lineWidth.hashCode ^
+    numDividers.hashCode ^
+    maxY.hashCode ^
+    divider.hashCode ^
+    dividerAlternate.hashCode ^
+    xAxisDivider.hashCode ^
+    sections.hashCode;
+  }
 }
 
 class CBSectionedLineSection {
