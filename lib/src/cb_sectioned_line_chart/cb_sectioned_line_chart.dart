@@ -369,16 +369,6 @@ class CBSectionedLineSelection extends StatelessWidget {
                   child: Container(
                     decoration: lineColor != null ? BoxDecoration(
                       color: backgroundColor,
-                      border: Border(
-                        left: BorderSide(
-                          color: lineColor,
-                          width: lineWidth,
-                        ),
-                        right: BorderSide(
-                            color: lineColor,
-                            width: lineWidth
-                        ),
-                      ),
                     ) : null,
                     height: overSelectionHeight,
                     width: selectorWidth,
