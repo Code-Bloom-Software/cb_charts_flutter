@@ -281,8 +281,11 @@ class CBSectionedLineTimeLine extends StatelessWidget {
           children: [
             ...List.generate(xAxisDivider, (index) => SizedBox(
                 width: width,
-                child: Center(child: onIndex.call(index)))
-            )
+                child: Container(
+                    alignment: Alignment.centerRight,
+                    child: FractionalTranslation(
+                        translation: const Offset(0.5, 0),
+                        child: onIndex.call(index)))))
           ],
         );
       }
