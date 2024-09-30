@@ -179,8 +179,9 @@ class _CBSectionedLineChartState extends State<CBSectionedLineChart> {
     } else {
       rightOffset = section.values.map((e) => e.dx).reduce(max);
     }
+    final nextSectionDy = nextSection != null && nextSection.values.isNotEmpty ? nextSection.values[0].dy : 0.0;
     final leftOffset = section.values.map((e) => e.dx).reduce(min);
-    final bottomOffset = section.values.map((e) => e.dy).reduce(max);
+    final bottomOffset = max(section.values.map((e) => e.dy).reduce(max), nextSectionDy);
     final sectionWidth = rightOffset - leftOffset;
     final expandedWidget = section.expandedWidget;
     final collapsedWidget = section.collapsedWidget;
