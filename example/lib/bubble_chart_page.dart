@@ -33,6 +33,7 @@ class _BubbleChartPageState extends State<BubbleChartPage> {
           child: CBBubbleChart(
             controller: _controller,
             data: CBBubbleData(
+              scale: CBBubbleScale.log,
               items: [
                 CBBubbleItem(
                     label: 'Running',

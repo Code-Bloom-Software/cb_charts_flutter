@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cb_charts_flutter/src/cb_bubble_chart/cb_bubble_controller.dart';
 import 'package:cb_charts_flutter/src/cb_bubble_chart/cb_bubble_data.dart';
 import 'package:flutter/material.dart';
@@ -182,7 +184,20 @@ class _CBBubbleChartState extends State<CBBubbleChart> {
     final total = data.xAxisMax ?? data.items.map((e) => e.values[circleIndex]).reduce((value, element) => value + element);
 
     if (total <= 0) return 0;
-    return data.items[itemIndex].values[circleIndex]/total;
+    final ratio = (data.items[itemIndex].values[circleIndex]/total).clamp(0.0, 1.0);
+
+    switch(data.scale) {
+      case CBBubbleScale.linear:
+        return ratio;
+      case CBBubbleScale.log:
+        return log(1 + ratio) / log(2);
+      case CBBubbleScale.sqrt:
+        return sqrt(ratio);
+      case CBBubbleScale.cbrt:
+        return pow(ratio, 1/3).toDouble();
+      case CBBubbleScale.pow:
+        return pow(ratio, data.scalePowExponent).toDouble();
+    }
   }
 }
 

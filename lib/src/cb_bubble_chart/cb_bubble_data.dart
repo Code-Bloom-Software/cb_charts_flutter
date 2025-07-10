@@ -20,13 +20,21 @@ class CBBubbleData {
   /// The max value for the bubble in x axis (if null the max will be the sum)
   final double? xAxisMax;
 
+  /// The scale to transform the rate of bubble growing.
+  final CBBubbleScale scale;
+
+  /// The exponent for the scale when using CBBubbleScale.pow, no effect otherwise.
+  final double scalePowExponent;
+
   CBBubbleData({
     this.minDiameter = 3,
     this.maxDiameter = 56,
     this.percentOverlap = 0.2,
     this.labelWidth = 100,
     required this.items,
-    this.xAxisMax
+    this.xAxisMax,
+    this.scale = CBBubbleScale.linear,
+    this.scalePowExponent = 2
   });
 }
 
@@ -64,4 +72,8 @@ class CBBubbleTapWidget {
     required this.anchor,
     required this.child
   });
+}
+
+enum CBBubbleScale {
+  linear, log, sqrt, cbrt, pow
 }
