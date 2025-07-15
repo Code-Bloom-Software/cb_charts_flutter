@@ -34,3 +34,8 @@ export 'src/cb_sectioned_line_chart/cb_sectioned_line_data.dart';
 export 'src/cb_stacked_circle_chart/cb_stacked_circle_controller.dart' show CbStackedCircleController;
 export 'src/cb_stacked_circle_chart/cb_stacked_circle_chart.dart' show CbStackedCircleChart;
 export 'src/cb_stacked_circle_chart/cb_stacked_circle_data.dart';
+
+// Ranking chart
+export 'src/cb_ranking_chart/cb_ranking_controller.dart' show CBRankingController;
+export 'src/cb_ranking_chart/cb_ranking_chart.dart' show CBRankingChart;
+export 'src/cb_ranking_chart/cb_ranking_data.dart';
