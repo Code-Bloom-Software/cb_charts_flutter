@@ -8,7 +8,7 @@ class CbStackedCircleData {
   /// The maximum diameter for the biggest circle
   final double maxDiameter;
 
-  /// /// The chart circles
+  /// The chart circles
   final List<CBStackedCircleItem> circles;
 
   CbStackedCircleData({
