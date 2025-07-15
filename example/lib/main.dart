@@ -2,6 +2,7 @@ import 'package:example/bubble_chart_page.dart';
 import 'package:example/gauge_chart_page.dart';
 import 'package:example/legends_chart_page.dart';
 import 'package:example/legends_chart_with_goal_page.dart';
+import 'package:example/ranking_chart_page.dart';
 import 'package:example/ring_chart_over_goal_page.dart';
 import 'package:example/ring_chart_page.dart';
 import 'package:example/ring_chart_with_goal_page.dart';
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
         '/legends_chart_with_goal_page': (context) => const LegendsPageWithGoalPage(),
         '/bubble_chart_page': (context) => const BubbleChartPage(),
         '/sectioned_line_chart_page': (context) => const SectionedLineChartPage(),
-        '/stacked_circle_chart_page': (context) => const StackedCircleChartPage()
+        '/stacked_circle_chart_page': (context) => const StackedCircleChartPage(),
+        '/ranking_chart_page': (context) => const RankingChartPage()
       },
     );
   }
@@ -121,6 +123,12 @@ class _MyHomePageState extends State<MyHomePage> {
             title: const Text('Stacked circle chart'),
             onTap: () {
               Navigator.pushNamed(context, '/stacked_circle_chart_page');
+            },
+          ),
+          ListTile(
+            title: const Text('Ranking chart'),
+            onTap: () {
+              Navigator.pushNamed(context, '/ranking_chart_page');
             },
           ),
         ],
