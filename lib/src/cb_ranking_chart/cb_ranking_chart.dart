@@ -116,6 +116,8 @@ class _CBRankingChartState extends State<CBRankingChart> {
   }
 
   void _listener() {
+    if (_initialized) return;
+
     setState(() {
       _initialized = true;
     });
